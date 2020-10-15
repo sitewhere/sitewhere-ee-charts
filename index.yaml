@@ -1,0 +1,23 @@
+apiVersion: v1
+entries:
+  sitewhere-ee-secret:
+  - apiVersion: v1
+    appVersion: "3.0"
+    created: "2020-10-15T14:04:48.134828989Z"
+    description: SiteWhere EE Secret Chart
+    digest: b227ee60f814f85ea9413a2c652e1a73276abff2b1fb19595e85b00bc312f7c8
+    name: sitewhere-ee-secret
+    urls:
+    - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/sitewhere-ee-secret-0.3.0/sitewhere-ee-secret-0.3.0.tgz
+    version: 0.3.0
+  sitewhere-ee-syncope:
+  - apiVersion: v1
+    appVersion: "3.0"
+    created: "2020-10-15T14:04:48.398879838Z"
+    description: SiteWhere EE Syncope Chart
+    digest: 1fff9beade0ec0fd95b46648576707e84378a17eef87a54a36ae2177974b6f15
+    name: sitewhere-ee-syncope
+    urls:
+    - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/sitewhere-ee-syncope-0.3.0/sitewhere-ee-syncope-0.3.0.tgz
+    version: 0.3.0
+generated: "2020-10-15T14:04:47.707441699Z"

@@ -41,4 +41,4 @@ syncope:
     containerPort: 8080
     memoryLimit: 512Mi
     serviceType: ClusterIP
-  
+ 

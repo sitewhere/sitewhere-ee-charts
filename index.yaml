@@ -1,5 +1,15 @@
 apiVersion: v1
 entries:
+  sitewhere-ee-istio-ingress:
+  - apiVersion: v1
+    appVersion: "3.0"
+    created: "2020-10-15T19:23:22.38710079Z"
+    description: SiteWhere EE Istio Ingress
+    digest: 24ec41253cb5e9c75f8f734e64192eeb93b68f6956c1b54153150ea6c8307880
+    name: sitewhere-ee-istio-ingress
+    urls:
+    - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/sitewhere-ee-istio-ingress-0.3.0/sitewhere-ee-istio-ingress-0.3.0.tgz
+    version: 0.3.0
   sitewhere-ee-kafka-ephemeral:
   - apiVersion: v1
     appVersion: "3.0"

@@ -1,0 +1,33 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: {{ .Values.ingress.name }}-gateway
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+  - port:
+      number: {{ .Values.ingress.port | default "80" }}
+      name: {{ .Values.ingress.portName | default "http" }}
+      protocol: {{ .Values.ingress.protocol | default "HTTP" }}
+    hosts:
+    - {{ .Values.ingress.hosts | default "*" }}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ .Values.ingress.name }}-virtual-service
+spec:
+  hosts:
+  - {{ .Values.ingress.hosts | default "*" }}
+  gateways:
+  - {{ .Values.ingress.name }}-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: {{ .Values.ingress.targetPort }}
+        host: {{ .Values.ingress.targetHost }}

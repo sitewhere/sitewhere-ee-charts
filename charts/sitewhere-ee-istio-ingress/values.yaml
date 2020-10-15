@@ -1,0 +1,8 @@
+ingress:
+  name: sitewhere
+  port: 80
+  portName: rest-api
+  protocol: HTTP
+  hosts: "*"
+  targetHost: service-instance-management.sitewhere1
+  targetPort: 8080

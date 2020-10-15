@@ -4,3 +4,4 @@ secret:
     postgresql-password: c3luY29wZQ==
 labels:
   infra.sitewhere.io/app: sitewhere-ee
+ 

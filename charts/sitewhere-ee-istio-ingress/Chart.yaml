@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: "3.0"
 description: SiteWhere EE Istio Ingress
 name: sitewhere-ee-istio-ingress
-version: 0.3.0
+version: 0.3.1
 icon: http://sitewhere.io/docs/2.0.0/images/favicon.png
 home: http://www.sitewhere.com/
 maintainers:

@@ -1,5 +1,12 @@
-apiVersion: v1
+apiVersion: v2
 appVersion: "3.0"
 description: SiteWhere EE Istio Ingress
 name: sitewhere-ee-istio-ingress
 version: 0.3.0
+icon: http://sitewhere.io/docs/2.0.0/images/favicon.png
+home: http://www.sitewhere.com/
+maintainers:
+  - name: Derek Adams
+    email: derek.adams@sitewhere.com
+  - name: Jorge Villaverde
+    email: jorge.villaverde@sitewhere.com

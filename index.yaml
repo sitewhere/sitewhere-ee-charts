@@ -56,4 +56,20 @@ entries:
     urls:
     - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/sitewhere-ee-syncope-0.3.0/sitewhere-ee-syncope-0.3.0.tgz
     version: 0.3.0
+  smart-city:
+  - apiVersion: v2
+    appVersion: 3.0.0
+    created: "2020-10-27T19:34:47.401800892Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 9.8.7
+    description: A Helm chart for Kubernetes
+    digest: 12d5c0dccd234d4ad017437bc00357c10f23fc768712765eb77aec85774ceb83
+    name: smart-city
+    type: application
+    urls:
+    - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/smart-city-0.1.0/smart-city-0.1.0.tgz
+    version: 0.1.0
 generated: "2020-10-15T14:04:47.707441699Z"

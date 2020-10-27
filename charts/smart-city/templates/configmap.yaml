@@ -14,3 +14,5 @@ data:
   sitewhere.host: {{ .Values.sitewhere.host | quote }}
   sitewhere.port: {{ .Values.sitewhere.port | quote }}
   sitewhere.tenant.token: {{ .Values.sitewhere.tenant.token | quote }}
+  sitewhere.tenant.auth.token: {{ .Values.sitewhere.tenant.auth.token | quote }}
+  sitewhere.user: {{ .Values.sitewhere.user | quote }}

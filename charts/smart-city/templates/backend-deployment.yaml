@@ -1,0 +1,121 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "smart-city.fullname" . }}-backend
+  labels:
+    {{- include "smart-city.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.backend.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "smart-city.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/role: backend
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "smart-city.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/role: backend
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "smart-city.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+      - name: check-db-ready
+        image: postgres:9.6.5
+        command: ['sh', '-c', 
+          'until pg_isready -h {{ include "smart-city.fullname" . }}-postgresql-headless -p 5432; 
+          do echo waiting for database; sleep 2; done;']
+      containers:
+        - name: {{ .Chart.Name }}-backend
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8085
+              protocol: TCP
+          env:
+            - name: SPRING_DATASOURCE_HOSTNAME
+              value: "{{ include "smart-city.fullname" . }}-postgresql-headless"
+            - name: SPRING_DATASOURCE_PORT
+              value: "5432"
+            - name: SPRING_DATASOURCE_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "smart-city.fullname" . }}
+                  key: spring.datasource.dbname
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "{{ .Values.postgresql.postgresqlUsername }}"
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "smart-city.fullname" . }}
+                  key: postgresql-password
+            - name: SITEWHERE_HTTP_PROTOCOL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "smart-city.fullname" . }}
+                  key: sitewhere.http.protocol
+            - name: SITEWHERE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "smart-city.fullname" . }}
+                  key: sitewhere.host
+            - name: SITEWHERE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "smart-city.fullname" . }}
+                  key: sitewhere.port
+            - name: SITEWHERE_TENANT_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "smart-city.fullname" . }}
+                  key: sitewhere.tenant.token
+            - name: SITEWHERE_TENANT_AUTH_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "smart-city.fullname" . }}
+                  key: sitewhere.tenant.auth.token
+            - name: SITEWHERE_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "smart-city.fullname" . }}
+                  key: sitewhere.user
+            - name: SITEWHERE_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "smart-city.fullname" . }}
+                  key: sitewhere.user.password
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

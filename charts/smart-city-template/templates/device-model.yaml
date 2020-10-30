@@ -1,0 +1,298 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: TenantEngineDatasetTemplate
+metadata:
+  name: {{ include "smart-city-template.fullname" . }}-device-model
+  labels:
+      sitewhere.io/functional-area: device-management
+spec:
+  configuration: |
+   let UUID = Java.type('java.util.UUID')
+
+      // ########### //
+      // Common Code //
+      // ########### //
+      let devicesPerSite = 4
+
+      function randomId() {
+        return UUID.randomUUID().toString();
+      }
+
+      function randomDeviceToken(type) {
+        return '' + Math.floor(Math.random() * 100000) + '-' + type.getToken().toUpperCase() + '-' + Math.floor(Math.random() * 10000000);
+      }
+
+      function randomItem(items) {
+        return items[Math.floor(Math.random() * items.length)];
+      }
+
+    // ################################### //
+    // Create Customer Types and Customers //
+    // ################################### //
+
+    //  company type.
+    let parkingServiceCustomerType = deviceBuilder.newCustomerType( 'parkingService', 'Parking Service');
+    parkingServiceCustomerType.withDescription('A company that manages one or more parking areas.');
+    parkingServiceCustomerType.withIcon('car');
+    parkingServiceCustomerType = deviceBuilder.persist(parkingServiceCustomerType);
+    logger.info ('[Create Customer Type] ${parkingServiceCustomerType.name}');
+
+    // ############ //
+    // Create Customer //
+    // ############ //
+
+    let customers = [];
+
+    // Acme Inc.
+    let aaCustomer = deviceBuilder.newCustomer(parkingServiceCustomerType.getToken(), null, 'acme', 'Acme, Inc.');
+    aaCustomer.withDescription( 'Acme, Inc. is a parking service.');
+    aaCustomer.withImageUrl('https://user-images.githubusercontent.com/37479229/93466021-f7eb7000-f8c1-11ea-8a4a-14b928921410.png');
+    aaCustomer = deviceBuilder.persist(aaCustomer);
+    customers.push(aaCustomer);
+    logger.info("[Create Customer] ${aaCustomer.name}");
+
+
+    // ################################# //
+    // Create Area Types, Areas and Zone //
+    // ################################# //
+
+   let subNeighborhoodType = deviceBuilder.newAreaType( 'subneighborhood-type', 'Sub Neighborhood Type');
+       subNeighborhoodType.withDescription('Part of a Neighborhood.').withIcon( 'map');
+       subNeighborhoodType = deviceBuilder.persist(subNeighborhoodType);
+       logger.info( "[Create Area Type] ${subNeighborhoodType.name}");
+
+   // Neighborhood type.
+    let neighborhoodType = deviceBuilder.newAreaType( 'neighborhood-type', 'Neighborhood Type');
+    neighborhoodType.withDescription('Example Neighborhood.').withIcon( 'map');
+    neighborhoodType.withContainedAreaType(subNeighborhoodType.getToken());
+    neighborhoodType = deviceBuilder.persist(neighborhoodType);
+    logger.info( "[Create Area Type] ${neighborhoodType.name}");
+
+    // Downtown Neightborhood.
+    let downtown = deviceBuilder.newArea( neighborhoodType.getToken(), null, 'downtown', 'Downtown Area');
+    downtown.withDescription( 'Example of area of the city.');
+    downtown.withImageUrl('https://s3.amazonaws.com/sitewhere-demo/airport/airport.gif');
+    downtown.coord(33.770441,-84.401034).coord(33.771273,-84.381946);
+    downtown.coord(33.770366,-84.401027).coord(33.764966,-84.401171);
+    downtown.coord(33.764872,-84.403906).coord(33.751408,-84.402952);
+    downtown.coord(33.746277,-84.406535).coord(33.742646,-84.403501);
+    downtown.coord(33.754394,-84.378580).coord(33.762201,-84.382125);
+    downtown.coord( 33.744945,-84.390346);
+    downtown = deviceBuilder.persist( downtown);
+    logger.info( "[Create Area] ${downtown.name}");
+
+    // Create subarea Hotel District
+    let sonoSubN = deviceBuilder.newArea(subNeighborhoodType.getToken(), downtown.getToken(), 'sono', 'Sono');
+    sonoSubN.withDescription( 'Sono is a Part of Downtown.');
+    sonoSubN.withImageUrl('https://user-images.githubusercontent.com/37479229/93525249-1d9d6700-f90c-11ea-9912-6c95dfacc025.png');
+    sonoSubN.coord(33.771282,-84.390455);
+    sonoSubN.coord(33.762201,-84.382125);
+    sonoSubN.coord(33.762567,-84.382160);
+    sonoSubN = deviceBuilder.persist(sonoSubN);
+    logger.info(`[Create Area] ${sonoSubN.getName()}`);
+
+     // Create subarea Hotel District
+     let hotel = deviceBuilder.newArea(subNeighborhoodType.getToken(), downtown.getToken(), 'hotel', 'Hotel District');
+     hotel.withDescription( 'Hotel District is a part of Downtown.');
+     hotel.withImageUrl('https://user-images.githubusercontent.com/37479229/93595966-05226080-f98f-11ea-952c-78e9cafda6b3.png');
+     hotel.coord(33.771288,-84.392161).coord(33.758919,-84.392204);
+     hotel.coord(33.754328,-84.378726).coord(33.755006,-84.396257);
+     hotel.coord(33.762201,-84.382125).coord(33.771282,-84.390455);
+     hotel = deviceBuilder.persist( hotel);
+     logger.info(`[Create Area] ${hotel.getName()}`);
+
+     // Create subarea associated with downtown. South Downtown
+     let south = deviceBuilder.newArea(subNeighborhoodType.getToken(), downtown.getToken(), 'south', 'South Downtown');
+     south.withDescription( 'South Downtown is a part of Downtown.');
+     south.withImageUrl('https://user-images.githubusercontent.com/37479229/93596476-c04af980-f98f-11ea-8a05-8dad0055d999.png');
+     south.coord(33.754328,-84.378726);
+     south.coord(33.755006,-84.396257);
+     south.coord(33.744925,-84.390358);
+     south = deviceBuilder.persist(south);
+     logger.info(`[Create Area] ${south.getName()}`);
+
+    // ################### //
+    // Create Device Types //
+    // ################### //
+
+    let ns = 'http://sitewhere/common' // Namespace used for commands.
+    let allDeviceTypes = [];
+
+    // Data structure for assignment information.
+    function assnChoice(title, areaToken, assetToken, typeToken) {
+       return {'title': title, 'areaToken': areaToken, 'assetToken': assetToken, 'typeToken': typeToken};
+    }
+
+
+    // Lists for sensor types and available assignment options.
+    let sensors = []
+    let sensorsUspot = [];
+    let sensorsUspotItems = [];
+    sensorsUspotItems.push(assnChoice('SensorU', 'hotel', '442349340-SERIAL-NUMBER-USPOT', 'uspot-pd'));
+    sensorsUspotItems.push(assnChoice('SensorU', 'hotel', '342349343-SERIAL-NUMBER-USPOT', 'uspot-pd'));
+
+    let sensorsNWaveFlash = [];
+    let sensorsNWaveFlashItems = [];
+    sensorsNWaveFlashItems.push(assnChoice('SensorNWF', 'hotel', '623947324-SERIAL-NUMBER-FLASHMOUNT', 'nwave-FM'));
+    sensorsNWaveFlashItems.push(assnChoice('SensorNWF', 'south', '623947325-SERIAL-NUMBER-FLASHMOUNT', 'nwave-FM'));
+    sensorsNWaveFlashItems.push(assnChoice('SensorNWF', 'south', '623947326-SERIAL-NUMBER-FLASHMOUNT', 'nwave-FM'));
+    sensorsNWaveFlashItems.push(assnChoice('SensorNWF', 'south', '623947327-SERIAL-NUMBER-FLASHMOUNT', 'nwave-FM'));
+
+
+    let sensorsNWaveSurf = [];
+    let sensorsNWaveSurfItems = [];
+    sensorsNWaveSurfItems.push(assnChoice('SensorNWS', 'hotel', '193835744-SERIAL-NUMBER-SURFACE', 'nwave-SM'));
+    sensorsNWaveSurfItems.push(assnChoice('SensorNWS', 'hotel', '193835745-SERIAL-NUMBER-SURFACE', 'nwave-SM'));
+    sensorsNWaveSurfItems.push(assnChoice('SensorNWS', 'hotel', '193835746-SERIAL-NUMBER-SURFACE', 'nwave-SM'));
+    sensorsNWaveSurfItems.push(assnChoice('SensorNWS', 'hotel', '193835747-SERIAL-NUMBER-SURFACE', 'nwave-SM'));
+
+   let sensorsBosch = [];
+   let sensorsBoschItems= [];
+   sensorsBoschItems.push(assnChoice('SensorB', 'hotel', '734539339-SERIAL-NUMBER-PLS', 'bosch-pd'));
+   sensorsBoschItems.push(assnChoice('SensorB', 'sono', '392455494-SERIAL-NUMBER-PLS', 'bosch-pd'));
+   sensorsBoschItems.push(assnChoice('SensorB', 'sono', '398434398-SERIAL-NUMBER-PLS', 'bosch-pd'));
+
+   sensors = sensorsUspotItems.concat(sensorsBoschItems, sensorsNWaveSurfItems, sensorsNWaveFlashItems);
+
+   function addDeviceType(type) {
+         type = deviceBuilder.persist(type);
+         allDeviceTypes.push(type);
+         logger.info(`[Create Device Type] ${type.getName()}`);
+         return type;
+       }
+
+       function addCommand(type, command) {
+         command = deviceBuilder.persist(command);
+         logger.info(`[Create Command] ${type.getName()} ${command.getName()}`);
+         return command;
+       }
+
+       // Ubiotica parking sensor.
+       let uspot = deviceBuilder.newDeviceType('uspot-pd', 'Ubiotica U-SPOT M2M');
+       uspot.withImageUrl('https://user-images.githubusercontent.com/37479229/93223370-60154700-f746-11ea-8bd7-c077b0ac4cf2.jpg');
+       uspot.withDescription('Ubiotica parking device sensor');
+       uspot.metadata('manufacturer', 'Ubiotica');
+       uspot = addDeviceType(uspot);
+       sensorsUspot.push(uspot);
+
+       // Bosch parking sensor.
+       let uno = deviceBuilder.newDeviceType('bosch-pd', 'Bosch Parking lot sensor device');
+       uno.withImageUrl('https://user-images.githubusercontent.com/37479229/93223421-6d323600-f746-11ea-9ff9-ff489230be6d.jpg');
+       uno.withDescription('Example device sensor');
+       uno.metadata('manufacturer', 'Bosch');
+       uno = addDeviceType(uno);
+       sensorsBosch.push(uno);
+
+
+       // Nwave flush parking sensor.
+        let fm = deviceBuilder.newDeviceType('nwave-FM', 'NWave Flash-Mount Iot Parking Sensor');
+        fm.withImageUrl('https://user-images.githubusercontent.com/37479229/93223388-64d9fb00-f746-11ea-84ba-6b8fcec39268.jpg');
+        fm.withDescription('The Flush-Mount Iot Parking Sensor is enclosed in an IP-68 waterproof, UV-stabilized and solvent-resistant glass-filled polycarbonate case. It features an exceptionally long communication range of up to 10 miles line of sight (LoS), and low power consumption with batteries lasting up to a decade.');
+        fm.metadata('manufacturer', 'Nwave');
+        fm = addDeviceType(fm);
+        sensorsNWaveFlash.push(fm);
+
+
+        // Nwave surface parking sensor.
+        let sm = deviceBuilder.newDeviceType('nwave-SM', 'NWave Surface-Mount Iot Parking Sensor');
+        sm.withImageUrl('https://user-images.githubusercontent.com/37479229/93223410-6a374580-f746-11ea-849f-442f3969e842.jpeg');
+        sm.withDescription('The Surface-Mount Iot Parking Sensor is enclosed in an IP-68 waterproof, UV-stabilized and solvent-resistant glass-filled polycarbonate case. It features an exceptionally long communication range of up to 10 miles line of sight (LoS), and low power consumption with batteries lasting up to a decade.');
+        sm.metadata('manufacturer', 'Nwave');
+        sm = addDeviceType(sm);
+        sensorsNWaveSurf.push(sm);
+
+        // OpenHAB device type.
+        let openhab = deviceBuilder.newDeviceType('openhab', 'openHAB');
+        openhab.withImageUrl('https://s3.amazonaws.com/sitewhere-demo/gateway/openhab.png');
+        openhab.withDescription('This is a virual device type for testing openHAB functionality.');
+        openhab.metadata('manufacturer', 'openHAB');
+        openhab = addDeviceType(openhab);
+        let openhab_onoff = deviceBuilder.newCommand(openhab.getToken(), randomId(), ns, 'sendOnOffCommand' ).withDescription('Send on/off command to an openHAB item.').withStringParameter('itemName', true).withStringParameter('command', true);
+        addCommand(openhab, openhab_onoff);
+        let openhab_openclose = deviceBuilder.newCommand(openhab.getToken(), randomId(), ns, 'sendOpenCloseCommand').withDescription('Send open/close command to an openHAB item.').withStringParameter('itemName', true).withStringParameter('command', true);
+        addCommand(openhab, openhab_openclose);
+        //sensors.push(openhab);
+
+
+
+       // Add common commands.
+       allDeviceTypes.forEach(function(type) {
+            let ping = deviceBuilder.newCommand(type.getToken(), randomId(), ns, 'ping').withDescription('Send a ping request to the device to verify it can be reached.');
+            addCommand(type, ping);
+            let testEvents = deviceBuilder.newCommand(type.getToken(), randomId(), ns, 'testEvents').withDescription('Send a ping request to the device to verify it can be reached.');
+            addCommand(type, testEvents);
+            let setStateAvailable = deviceBuilder.newCommand(type.getToken(), randomId(), ns, 'setStateAvailable').withDescription('Send a state change into Available.');
+            addCommand(type, setStateAvailable);
+            let setStateNotAvailable = deviceBuilder.newCommand(type.getToken(), randomId(), ns, 'setStateNotAvailable').withDescription('Send a state change into Not Available.');
+            addCommand(type, setStateNotAvailable);
+            let setStateBlocked = deviceBuilder.newCommand(type.getToken(), randomId(), ns, 'setStateAvailable').withDescription('Send a state change into Blocked or Forbidden.');
+            addCommand(type, setStateBlocked);
+       });
+
+       // #################### //
+       // Create Device Groups //
+       // #################### //
+       function addGroup(group) {
+       group = deviceBuilder.persist(group);
+       logger.info(`[Create Group] ${group.getName()}`);
+       return group;
+       }
+
+    let sensorGroup = deviceBuilder.newGroup(randomId(), 'SensorsU').withRole('parking-monitoring').withRole('data-gathering');
+    sensorGroup.withDescription( 'Device group that contains sensors for parking monitoring.');
+    sensorGroup.withImageUrl( 'https://s3.amazonaws.com/sitewhere-demo/construction/ekahau/ekahau-a4-tag.jpg');
+    sensorGroup = addGroup(sensorGroup);
+
+    let boschGroup = deviceBuilder.newGroup(randomId(), 'Bosch Equipment Tracking').withRole('parking-monitoring').withRole('data-gathering');
+    boschGroup.withDescription('Device group that contains devices for tracking location of bosch equipment.');
+    boschGroup.withImageUrl('https://s3.amazonaws.com/sitewhere-demo/construction/cat/cat-416f.jpg');
+    boschGroup = addGroup(boschGroup);
+
+    let nwaveGroup = deviceBuilder.newGroup(randomId(), 'NWave Surface Equipment Tracking').withRole('parking-monitoring').withRole('data-gathering');
+    nwaveGroup.withDescription('Device group that contains devices for tracking location of people.');
+    nwaveGroup.withImageUrl('https://s3.amazonaws.com/sitewhere-demo/sitewhere-symbol.png');
+    nwaveGroup = addGroup(nwaveGroup);
+
+    let nwaveFlashGroup = deviceBuilder.newGroup(randomId(), 'NWave Surface Equipment Tracking').withRole('parking-monitoring').withRole('data-gathering');
+    nwaveFlashGroup.withDescription('Device group that contains devices for tracking location of people.');
+    nwaveFlashGroup.withImageUrl('https://s3.amazonaws.com/sitewhere-demo/sitewhere-symbol.png');
+    nwaveFlashGroup = addGroup(nwaveFlashGroup);
+
+    // ############################## //
+    // Create Devices and Assignments //
+    // ############################## //
+
+    // Create the requested number of devices and assignments per site.
+    let sensorElements = []
+
+
+
+     sensors.forEach(function(assnInfo){
+       let type;
+       allDeviceTypes.forEach(function(typeI) {
+          let token = typeI.getToken();
+          if (token == assnInfo.typeToken) {
+             type = typeI;
+          }
+       });
+
+      // Create a device.
+      let device = deviceBuilder.newDevice(type.getToken(), randomDeviceToken(type)).withComment(`${assnInfo.title} based on ${type.getName()}.`);
+      device = deviceBuilder.persist(device);
+      logger.info(`[Create Device] ${device.getToken()}`);
+
+      // Create an assignment based on device type.
+      let assn = deviceBuilder.newAssignment(device.getToken(), aaCustomer.getToken(), assnInfo.areaToken, assnInfo.assetToken);
+      assn.metadata('state', '0');
+      //assn.metadata('specialSpot', 'true')
+      if (assn.token == 'hotel') {
+        assn.metadata('price', '1.5');
+      } else {
+        assn.metadata('price', '1.1');
+      }
+      assn = deviceBuilder.persist(assn);
+
+      logger.info(`[Create Assignment] ${assn.getToken()}`);
+    });
+
+
+

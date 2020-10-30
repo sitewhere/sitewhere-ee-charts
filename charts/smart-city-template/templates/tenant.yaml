@@ -1,0 +1,20 @@
+apiVersion: sitewhere.io/v1alpha3
+kind: SiteWhereTenant
+metadata:
+  name: {{ .Values.token }}
+  namespace: {{ .Release.Namespace | default "sitewhere" }}
+spec:
+  authenticationToken: {{ .Values.authToken }}
+  authorizedUserIds:
+    - admin
+    - noadmin
+  branding:
+    backgroundColor: null
+    borderColor: null
+    foregroundColor: null
+    icon: null
+    imageUrl: "{{ .Values.imageURL }}"
+  configurationTemplate: {{ .Values.configurationTemplate }}
+  datasetTemplate: {{ include "smart-city-template.fullname" . }}
+  metadata: null
+  name: {{ .Values.name }}

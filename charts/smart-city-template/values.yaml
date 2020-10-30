@@ -1,0 +1,10 @@
+# Default values for smart-city-template.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+name: Smart City
+description: Smart City use case
+token: sc
+authToken: sc0123456789
+imageURL: https://user-images.githubusercontent.com/37479229/93597164-fdfc5200-f990-11ea-8469-47123d783ce9.png
+configurationTemplate: default

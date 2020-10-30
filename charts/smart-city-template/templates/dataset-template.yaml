@@ -1,0 +1,12 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: TenantDatasetTemplate
+metadata:
+  name: {{ include "smart-city-template.fullname" . }}
+spec:
+  name: {{ .Values.name }}
+  description: {{ .Values.description }}
+  tenantEngineTemplates:
+    deviceManagement: {{ include "smart-city-template.fullname" . }}-device-model
+    eventManagement: {{ include "smart-city-template.fullname" . }}-event-model
+    assetManagement: {{ include "smart-city-template.fullname" . }}-asset-model
+    scheduleManagement: {{ include "smart-city-template.fullname" . }}-schedule-model

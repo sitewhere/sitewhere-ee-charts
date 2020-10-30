@@ -5,7 +5,12 @@ on:
     branches:
       - master
     paths:
-      - 'charts/**'
+      - 'charts/sitewhere-ee-istio-ingress'
+      - 'charts/sitewhere-ee-kafka-ephemeral'
+      - 'charts/sitewhere-ee-secret'
+      - 'charts/sitewhere-ee-syncope'
+      - 'charts/smart-city'
+      - 'charts/smart-city-tenant'
 
 jobs:
   release:

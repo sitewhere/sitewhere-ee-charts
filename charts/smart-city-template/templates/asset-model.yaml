@@ -1,0 +1,117 @@
+apiVersion: templates.sitewhere.io/v1alpha3
+kind: TenantEngineDatasetTemplate
+metadata:
+  name: {{ include "smart-city-template.fullname" . }}-asset-model
+  labels:
+      sitewhere.io/functional-area: asset-management
+spec:
+  configuration: |
+    var assetType;
+
+    // ######################### //
+    // Create Person Asset Types //
+    // ######################### //
+
+    assetType = assetBuilder.newAssetType('employee', 'Acme Employee')
+    assetType.asPerson().withImageUrl('https://user-images.githubusercontent.com/37479229/93466021-f7eb7000-f8c1-11ea-8a4a-14b928921410.png')
+    assetType.withDescription('An employee of Acme')
+    assetBuilder.persist(assetType)
+
+    // ######################### //
+    // Create Device Asset Types //
+    // ######################### //
+
+    assetType = assetBuilder.newAssetType('u-spot', 'U Spot M2M')
+    assetType.asDevice().withImageUrl('https://user-images.githubusercontent.com/37479229/93223370-60154700-f746-11ea-8bd7-c077b0ac4cf2.jpg')
+    assetType.withDescription('The sensor uses Earth&#39s magnetic field measurement technology to detect the presence of a vehicle in a parking space. The sensor transmits its information through a communication with the mobile network, thanks to an integrated SIM card.')
+    assetType.metadata('manufacturer', 'Ubiotica')
+    assetBuilder.persist(assetType)
+
+    assetType = assetBuilder.newAssetType('bosch-PLS', 'Bosch Parking lot sensor')
+    assetType.asDevice().withImageUrl('https://user-images.githubusercontent.com/37479229/93223421-6d323600-f746-11ea-9ff9-ff489230be6d.jpg')
+    assetType.withDescription('The Parking Lot Sensor (PLS) detects and reports parking space occupancy, thus enabling active parking lot management features, such as search, navigation and reservation. It utilizes the discretionary LoRaWAN protocol for wireless communication and can therefore be integrated easily into any Smart City project.')
+    assetType.metadata('manufacturer', 'Bosch')
+    assetBuilder.persist(assetType)
+
+    assetType = assetBuilder.newAssetType('nwave-FM', 'NWave Flash-Mount Iot Parking Sensor')
+    assetType.asDevice().withImageUrl('https://user-images.githubusercontent.com/37479229/93223388-64d9fb00-f746-11ea-84ba-6b8fcec39268.jpg')
+    assetType.withDescription('The Flush-Mount Iot Parking Sensor is enclosed in an IP-68 waterproof, UV-stabilized and solvent-resistant glass-filled polycarbonate case. It features an exceptionally long communication range of up to 10 miles line of sight (LoS), and low power consumption with batteries lasting up to a decade.')
+    assetType.metadata('manufacturer', 'NWave')
+    assetBuilder.persist(assetType)
+
+    assetType = assetBuilder.newAssetType('nwave-SM', 'NWave Surface-Mount Iot Parking Sensor')
+    assetType.asDevice().withImageUrl('https://user-images.githubusercontent.com/37479229/93223410-6a374580-f746-11ea-849f-442f3969e842.jpeg')
+    assetType.withDescription('The Surface Mount Iot Parking Sensor is enclosed in an IP-68 waterproof, UV-stabilized and solvent-resistant glass-filled polycarbonate case. It features an exceptionally long communication range of up to 10 miles line of sight (LoS), and low power consumption with batteries lasting up to a decade.')
+    assetType.metadata('manufacturer', 'NWave')
+    assetBuilder.persist(assetType)
+
+    var asset;
+
+    // #################### //
+    // Create Device Assets //
+    // #################### //
+
+    asset = assetBuilder.newAsset('442349340-SERIAL-NUMBER-USPOT', 'u-spot', '87 Cone st')
+    asset.withImageUrl('https://user-images.githubusercontent.com/37479229/93223370-60154700-f746-11ea-8bd7-c077b0ac4cf2.jpg')
+    asset.metadata('address', '87 Cone St NW')
+    assetBuilder.persist(asset)
+
+    asset = assetBuilder.newAsset('342349343-SERIAL-NUMBER-USPOT', 'u-spot', '98 Cone st')
+    asset.withImageUrl('https://user-images.githubusercontent.com/37479229/93223370-60154700-f746-11ea-8bd7-c077b0ac4cf2.jpg')
+    asset.metadata('address', '98 Cone St NW')
+    assetBuilder.persist(asset)
+
+    asset = assetBuilder.newAsset('734539339-SERIAL-NUMBER-PLS', 'bosch-PLS', '81 Walton St')
+    asset.withImageUrl('https://user-images.githubusercontent.com/37479229/93223421-6d323600-f746-11ea-9ff9-ff489230be6d.jpg')
+    asset.metadata('address', '81 Walton St NW')
+    assetBuilder.persist(asset)
+
+    asset = assetBuilder.newAsset('623947324-SERIAL-NUMBER-FLASHMOUNT', 'nwave-FM', '84 Walton St')
+    asset.withImageUrl('https://user-images.githubusercontent.com/37479229/93223388-64d9fb00-f746-11ea-84ba-6b8fcec39268.jpg')
+    asset.metadata('address', '84 Walton St NW')
+    assetBuilder.persist(asset)
+
+    asset = assetBuilder.newAsset('193835744-SERIAL-NUMBER-SURFACE', 'nwave-SM', '40 Forsyth St')
+    asset.withImageUrl('https://user-images.githubusercontent.com/37479229/93223410-6a374580-f746-11ea-849f-442f3969e842.jpeg')
+    asset.metadata('address', '40 Forsyth St NW')
+    assetBuilder.persist(asset)
+
+    asset = assetBuilder.newAsset('392455494-SERIAL-NUMBER-PLS', 'bosch-PLS', '359 Angier Ave')
+    asset.withImageUrl('https://user-images.githubusercontent.com/37479229/93223370-60154700-f746-11ea-8bd7-c077b0ac4cf2.jpg')
+    asset.metadata('address', '359 Angier Ave NE')
+    assetBuilder.persist(asset)
+
+    asset = assetBuilder.newAsset('398434398-SERIAL-NUMBER-PLS', 'bosch-PLS', '364 Angier Ave')
+    asset.withImageUrl('https://user-images.githubusercontent.com/37479229/93223370-60154700-f746-11ea-8bd7-c077b0ac4cf2.jpg')
+    asset.metadata('address', '364 Angier Ave NE')
+    assetBuilder.persist(asset)
+
+    asset = assetBuilder.newAsset('193835745-SERIAL-NUMBER-SURFACE', 'nwave-SM', '85 Wall St')
+    asset.withImageUrl('https://user-images.githubusercontent.com/37479229/93223410-6a374580-f746-11ea-849f-442f3969e842.jpeg')
+    asset.metadata('address', '85 Wall St SW')
+    assetBuilder.persist(asset)
+
+    asset = assetBuilder.newAsset('193835746-SERIAL-NUMBER-SURFACE', 'nwave-SM', '79 Wall St')
+    asset.withImageUrl('https://user-images.githubusercontent.com/37479229/93223410-6a374580-f746-11ea-849f-442f3969e842.jpeg')
+    asset.metadata('address', '79 Wall St SW')
+    assetBuilder.persist(asset)
+
+    asset = assetBuilder.newAsset('193835747-SERIAL-NUMBER-SURFACE', 'nwave-SM', '73 Wall St')
+    asset.withImageUrl('https://user-images.githubusercontent.com/37479229/93223410-6a374580-f746-11ea-849f-442f3969e842.jpeg')
+    asset.metadata('address', '73 Wall St SW')
+    assetBuilder.persist(asset)
+
+    asset = assetBuilder.newAsset('623947325-SERIAL-NUMBER-FLASHMOUNT', 'nwave-FM', '171 Mitchell St')
+    asset.withImageUrl('https://user-images.githubusercontent.com/37479229/93223388-64d9fb00-f746-11ea-84ba-6b8fcec39268.jpg')
+    asset.metadata('address', '171 Mitchell St SW')
+    assetBuilder.persist(asset)
+
+    asset = assetBuilder.newAsset('623947326-SERIAL-NUMBER-FLASHMOUNT', 'nwave-FM', '175 Mitchell St')
+    asset.withImageUrl('https://user-images.githubusercontent.com/37479229/93223388-64d9fb00-f746-11ea-84ba-6b8fcec39268.jpg')
+    asset.metadata('address', '175 Mitchell St SW')
+    assetBuilder.persist(asset)
+
+    asset = assetBuilder.newAsset('623947327-SERIAL-NUMBER-FLASHMOUNT', 'nwave-FM', '179 Mitchell St')
+    asset.withImageUrl('https://user-images.githubusercontent.com/37479229/93223388-64d9fb00-f746-11ea-84ba-6b8fcec39268.jpg')
+    asset.metadata('address', '179 Mitchell St SW')
+    assetBuilder.persist(asset)

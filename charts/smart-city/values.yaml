@@ -56,7 +56,7 @@ securityContext:
 ingress:
   enabled: true
   smartcity:
-    host: localhost
+    host: smartcity.local
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"

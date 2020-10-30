@@ -1,0 +1,20 @@
+apiVersion: sitewhere.io/v1alpha3
+kind: SiteWhereTenant
+metadata:
+  name: sc
+  namespace: sitewhere
+spec:
+  authenticationToken: sc0123456789
+  authorizedUserIds:
+  - admin
+  - noadmin
+  branding:
+    backgroundColor: null
+    borderColor: null
+    foregroundColor: null
+    icon: null
+    imageUrl: 'https://user-images.githubusercontent.com/37479229/93597164-fdfc5200-f990-11ea-8469-47123d783ce9.png'
+  configurationTemplate: default
+  datasetTemplate: smart-city
+  metadata: null
+  name: Smart City

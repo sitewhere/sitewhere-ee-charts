@@ -26,7 +26,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    - host: "localhost"
+    - host: {{ .Values.ingress.smartcity.host}}
       http:
         paths:
           - path: /

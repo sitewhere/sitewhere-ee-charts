@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'charts/smart-city'
+      - 'charts/**'
 
 jobs:
   release:

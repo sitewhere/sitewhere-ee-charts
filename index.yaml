@@ -59,6 +59,21 @@ entries:
   smart-city:
   - apiVersion: v2
     appVersion: 3.0.0
+    created: "2020-11-02T14:16:18.843352197Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 9.8.7
+    description: A Helm chart for Kubernetes
+    digest: 37cfeefd3897e72e6d9795da5250eb8b7e479dc7505dc6e958711988a291f5bb
+    name: smart-city
+    type: application
+    urls:
+    - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/smart-city-0.1.1/smart-city-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 3.0.0
     created: "2020-10-27T19:34:47.401800892Z"
     dependencies:
     - condition: postgresql.enabled
@@ -72,4 +87,15 @@ entries:
     urls:
     - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/smart-city-0.1.0/smart-city-0.1.0.tgz
     version: 0.1.0
+  smart-city-template:
+  - apiVersion: v2
+    appVersion: 3.0.0
+    created: "2020-11-02T14:16:18.949358317Z"
+    description: A Helm chart deploying SiteWhere Tenant templates for Smart City
+    digest: e27a7bd68b34a852e4e1a0a4e3ce6eaadfd42e3e89fce22ad50af71c5fc92642
+    name: smart-city-template
+    type: application
+    urls:
+    - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/smart-city-template-0.1.1/smart-city-template-0.1.1.tgz
+    version: 0.1.1
 generated: "2020-10-15T14:04:47.707441699Z"

@@ -46,6 +46,16 @@ entries:
     urls:
     - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/sitewhere-ee-secret-0.3.0/sitewhere-ee-secret-0.3.0.tgz
     version: 0.3.0
+  sitewhere-ee-service-account:
+  - apiVersion: v1
+    appVersion: "3.0"
+    created: "2020-11-19T22:30:18.959054957Z"
+    description: SiteWhere EE Service Account Chart
+    digest: 39b7e34719137d574e2c90b1f133071c458d31d1842a8a45b8db4123f70ce189
+    name: sitewhere-ee-service-account
+    urls:
+    - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/sitewhere-ee-service-account-0.3.0/sitewhere-ee-service-account-0.3.0.tgz
+    version: 0.3.0
   sitewhere-ee-syncope:
   - apiVersion: v1
     appVersion: "3.0"

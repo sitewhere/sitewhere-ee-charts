@@ -1,0 +1,91 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  # "namespace" omitted since ClusterRoles are not namespaced
+  name: sitewhere-ee-cluster-role
+rules:
+- apiGroups:
+  - ""
+  - apps
+  - extensions
+  - autoscaling
+  resources:
+  - nodes
+  - namespaces
+  - serviceaccounts
+  - secrets
+  - pods
+  - pods/log
+  - services
+  - configmaps
+  - deployments
+  - deployments/scale
+  - deployments/status
+  - daemonsets
+  - persistentvolumes
+  - persistentvolumeclaims
+  - endpoints
+  - replicasets
+  - statefulsets
+  - events
+  - replicationcontrollers
+  - ingresses
+  - networkpolicies
+  - horizontalpodautoscalers
+  verbs:
+  - "*"
+- apiGroups:
+  - rbac.authorization.k8s.io
+  - storage.k8s.io
+  - admissionregistration.k8s.io
+  resources:
+  - roles
+  - rolebindings
+  - clusterroles
+  - clusterrolebindings
+  - storageclasses
+  - validatingwebhookconfigurations
+  - mutatingwebhookconfigurations
+  verbs:
+  - "*"
+- apiGroups:
+  - templates.sitewhere.io
+  resources:
+  - instanceconfigurations  
+  - instancedatasets
+  - tenantconfigurations
+  - tenantengineconfigurations
+  - tenantdatasets
+  - tenantenginedatasets
+  verbs:
+  - "*"
+- apiGroups:
+  - sitewhere.io
+  resources:
+  - instances
+  - instances/status
+  - microservices
+  - microservices/status
+  - tenantengines
+  - tenantengines/status
+  - tenants
+  - tenants/status
+  verbs:
+  - "*"
+- apiGroups:
+  - infra.sitewhere.io
+  resources:
+  - catalogs
+  - catalogitemgroups
+  - catalogitems
+  - configurations
+  - configurationitems
+  - components 
+  - mscatalogs
+  - mscatalogitemgroups
+  - mscatalogitems
+  - msconfigurations
+  - msconfigurationitems
+  verbs:
+  - "*"
+  

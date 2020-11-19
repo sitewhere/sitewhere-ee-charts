@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: sitewhere-ee-cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: sitewhere-ee
+    namespace: sitewhere-ee-system
+roleRef:
+  kind: ClusterRole
+  name: sitewhere-ee-cluster-role
+  apiGroup: rbac.authorization.k8s.io

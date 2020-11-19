@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sitewhere-ee-system-role-binding
+  namespace: sitewhere-ee-system
+subjects:
+- kind: ServiceAccount
+  name: sitewhere-ee
+  namespace: sitewhere-ee-system
+roleRef:
+  kind: Role
+  name: sitewhere-ee-role
+  apiGroup: rbac.authorization.k8s.io

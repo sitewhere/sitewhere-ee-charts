@@ -1,0 +1,5 @@
+apiVersion: v1
+appVersion: "3.0"
+description: SiteWhere EE Service Account Chart
+name: sitewhere-ee-service-account
+version: 0.3.0

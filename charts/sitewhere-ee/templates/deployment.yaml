@@ -38,8 +38,8 @@ spec:
           env:
             - name: "sitewhere-ee.k8s.pod.ip"
               valueFrom:
-              fieldRef:
-                fieldPath: status.podIP
+                fieldRef:
+                  fieldPath: status.podIP
             - name: "sitewhere-ee.namespace"
               valueFrom:
                 fieldRef:

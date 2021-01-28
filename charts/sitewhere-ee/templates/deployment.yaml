@@ -25,9 +25,11 @@ spec:
         command: ['sh', '-c', 
           'until pg_isready -h {{ include "sitewhere-ee.fullname" . }}-postgresql-headless -p 5432; 
           do echo waiting for database; sleep 2; done;']
+      imagePullSecrets:
+        - name: sitewhere-sitewhere-ee-user-pull-secret
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http

@@ -5,9 +5,9 @@
 replicaCount: 1
 
 image:
-  registry: docker.io
-  repository: sitewhere/service-ee-web-rest
-  tag: 2.1.0
+  registry: quay.io
+  repository: sitewhere/sitewhere-ee
+  tag: 3.0.0.beta1
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -83,3 +83,9 @@ postgresql:
   postgresqlUsername: sitewhere
   postgresqlDatabase: sitewhere-ee
   existingSecret: sitewhere-ee
+  persistence:
+    enabled: true
+    size: 512Mi
+  service:
+    type: LoadBalancer
+    

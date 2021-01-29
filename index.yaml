@@ -3,6 +3,21 @@ entries:
   sitewhere-ee:
   - apiVersion: v2
     appVersion: 3.0.0
+    created: "2021-01-29T17:26:49.610860506Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.2.5
+    description: SiteWhere Enterprise Edition Helm Chart
+    digest: eee85d82cd137868fc8bbd521c6594b692c1ee3d11b66296e5f542ba029f7b5b
+    name: sitewhere-ee
+    type: application
+    urls:
+    - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/sitewhere-ee-0.1.4/sitewhere-ee-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 3.0.0
     created: "2021-01-29T17:14:44.875217193Z"
     dependencies:
     - condition: postgresql.enabled

@@ -19,6 +19,9 @@ spec:
         app.kubernetes.io/name: {{ include "sitewhere-ee.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
+      serviceAccountName: {{ include "sitewhere-ee.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       initContainers:
       - name: check-db-ready
         image: postgres:9.6.5

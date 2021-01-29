@@ -22,6 +22,17 @@ rules:
   - patch
   - delete
 - apiGroups:
+  - ""
+  resources:
+  - namespaces/status
+  - pods/status
+  - events/status
+  - services/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
   - apps
   resources:
   - deployments

@@ -122,6 +122,16 @@ entries:
     urls:
     - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/sitewhere-ee-keycloak-0.3.0/sitewhere-ee-keycloak-0.3.0.tgz
     version: 0.3.0
+  sitewhere-ee-redis:
+  - apiVersion: v1
+    appVersion: "3.0"
+    created: "2021-02-03T14:47:58.490285026Z"
+    description: SiteWhere EE Redis
+    digest: d3fb0aedd2b7ccdaa94f98fe2094998dfa6a7ed3c394367c04ba94d592cd74b0
+    name: sitewhere-ee-redis
+    urls:
+    - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/sitewhere-ee-redis-0.3.0/sitewhere-ee-redis-0.3.0.tgz
+    version: 0.3.0
   sitewhere-ee-secret:
   - apiVersion: v1
     appVersion: "3.0"

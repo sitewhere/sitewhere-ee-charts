@@ -1,0 +1,17 @@
+# PostgreSQL Chart Values
+postgresql:
+  enabled: true
+  image:
+    debug: true
+  nameOverride: sitewhere-db-postgresql
+  fullnameOverride: sitewhere-db-postgresql
+  enabled: true
+  persistence:
+    enabled: true
+    size: 500Mi
+  postgresqlUsername: sitewhere
+  postgresqlDatabase: sitewhere
+  existingSecret: sitewhere-postgresql
+  service:
+    type: ClusterIP
+    port: 5432

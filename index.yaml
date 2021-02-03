@@ -122,6 +122,16 @@ entries:
     urls:
     - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/sitewhere-ee-keycloak-0.3.0/sitewhere-ee-keycloak-0.3.0.tgz
     version: 0.3.0
+  sitewhere-ee-postgresql:
+  - apiVersion: v1
+    appVersion: "3.0"
+    created: "2021-02-03T17:34:21.247651159Z"
+    description: SiteWhere EE PostgreSQL
+    digest: 160ca01b47df037f401b94e88084f7e43b0b2812448dc96d5bfea720392808fe
+    name: sitewhere-ee-postgresql
+    urls:
+    - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/sitewhere-ee-postgresql-0.3.0/sitewhere-ee-postgresql-0.3.0.tgz
+    version: 0.3.0
   sitewhere-ee-redis:
   - apiVersion: v1
     appVersion: "3.0"

@@ -1,0 +1,13 @@
+# Redis chart default values
+redis:
+  enabled: true
+  fullnameOverride: sitewhere-redis
+  cluster:
+    enabled: false
+  master:
+    persistence:
+      enabled: true
+      size: 500Mi
+  existingSecret: sitewhere-redis
+  existingSecretPasswordKey: redis-password
+    

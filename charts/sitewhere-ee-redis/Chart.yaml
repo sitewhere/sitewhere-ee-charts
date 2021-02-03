@@ -1,0 +1,14 @@
+apiVersion: v1
+appVersion: "3.0"
+description: SiteWhere EE Redis
+name: sitewhere-ee-redis
+version: 0.3.0
+
+# Chart depencies
+dependencies:
+- name: redis
+  version: 12.6.2
+  repository: https://charts.bitnami.com/bitnami
+  condition: redis.enabled
+  tags:
+  - infrastructure

@@ -1,0 +1,12 @@
+# Keycloak chart default values.
+keycloak:
+  enabled: true
+  # Additional environment variables for Keycloak
+  extraEnv: |
+    - name: KEYCLOAK_USER
+      value: sitewhere
+    - name: KEYCLOAK_PASSWORD
+      value: sitewhere
+  service:
+    type: LoadBalancer
+    

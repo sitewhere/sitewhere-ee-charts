@@ -1,0 +1,14 @@
+apiVersion: v1
+appVersion: "3.0"
+description: SiteWhere EE Keycloak Chart
+name: sitewhere-ee-keycloak
+version: 0.3.0
+
+# Chart depencies
+dependencies:
+- name: keycloak
+  version: 9.8.1
+  repository: https://codecentric.github.io/helm-charts
+  condition: keycloak.enabled
+  tags:
+  - infrastructure

@@ -2,7 +2,7 @@ apiVersion: v1
 appVersion: "3.0"
 description: SiteWhere EE Keycloak Chart
 name: sitewhere-ee-keycloak
-version: 0.3.0
+version: 0.3.1
 
 # Chart depencies
 dependencies:

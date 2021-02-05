@@ -115,6 +115,15 @@ entries:
   sitewhere-ee-keycloak:
   - apiVersion: v1
     appVersion: "3.0"
+    created: "2021-02-05T22:27:58.513239749Z"
+    description: SiteWhere EE Keycloak Chart
+    digest: f61611ccd40cc1073b23b68880e57e5544c4c38f42b1dde800ac0d15feff794c
+    name: sitewhere-ee-keycloak
+    urls:
+    - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/sitewhere-ee-keycloak-0.3.1/sitewhere-ee-keycloak-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v1
+    appVersion: "3.0"
     created: "2021-02-03T14:21:28.728718362Z"
     description: SiteWhere EE Keycloak Chart
     digest: 70a698b0fb646af9c6ad47fe787ede969a2487e14fd02356ac30412254162d72

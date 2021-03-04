@@ -76,6 +76,16 @@ entries:
     urls:
     - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/sitewhere-ee-0.1.0/sitewhere-ee-0.1.0.tgz
     version: 0.1.0
+  sitewhere-ee-influxdb:
+  - apiVersion: v1
+    appVersion: "3.0"
+    created: "2021-03-04T18:14:09.909675141Z"
+    description: SiteWhere EE InfluxDB
+    digest: 34504762e8fc4e60f88ce22ace5d9eaa678d9a3029934b1734e6427a297e39a1
+    name: sitewhere-ee-influxdb
+    urls:
+    - https://github.com/sitewhere/sitewhere-ee-charts/releases/download/sitewhere-ee-influxdb-0.3.0/sitewhere-ee-influxdb-0.3.0.tgz
+    version: 0.3.0
   sitewhere-ee-istio-ingress:
   - apiVersion: v2
     appVersion: "3.0"
